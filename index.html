@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Misi Petualangan Rupiah: Jelajah Kantin Sekolah - SDN 58 Lubuklinggau</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #f59e0b;
+      --accent: #10b981;
+      --danger: #ef4444;
+      --bg: #f0f9ff;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --radius: 16px;
+      --shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .badge-score {
+      background-color: var(--secondary);
+      color: white;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.95rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .btn-header {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .btn-header:hover {
+      background: rgba(255,255,255,0.3);
+      transform: scale(1.05);
+    }
+
+    main {
+      flex: 1;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    .screen {
+      display: none;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero {
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    .hero-title {
+      font-size: 2.2rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      font-weight: 800;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: var(--secondary);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-avatar {
+      width: 130px;
+      height: 130px;
+      background: #e0f2fe;
+      border-radius: 50%;
+      margin: 0 auto 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      border: 4px solid var(--primary);
+      box-shadow: var(--shadow);
+    }
+
+    .input-nama-group {
+      max-width: 400px;
+      margin: 1.5rem auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: left;
+    }
+
+    .input-nama-group label {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .input-nama-group input {
+      padding: 12px 16px;
+      border: 2px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .input-nama-group input:focus {
+      border-color: var(--primary);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background-color: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background-color: #cbd5e1;
+    }
+
+    .btn-accent {
+      background-color: var(--accent);
+      color: white;
+    }
+
+    .btn-accent:hover {
+      background-color: #059669;
+    }
+
+    .menu-grid-simple {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .menu-card-simple {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .menu-card-simple:hover:not(.locked) {
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+      background: #eff6ff;
+    }
+
+    .menu-card-simple.locked {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background: #f1f5f9;
+    }
+
+    .badge-status-simple {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 0.75rem;
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .status-lock { background: #fee2e2; color: #991b1b; }
+    .status-open { background: #dbeafe; color: #1e40af; }
+
+    .money-card {
+      width: 260px;
+      height: 130px;
+      border-radius: 12px;
+      padding: 12px;
+      color: white;
+      font-weight: bold;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      position: relative;
+      margin: 1rem auto;
+      border: 2px solid rgba(255,255,255,0.4);
+      user-select: none;
+    }
+
+    .money-5k { background: linear-gradient(135deg, #a16207, #ca8a04); }
+    .money-10k { background: linear-gradient(135deg, #c2410c, #ea580c); }
+    .money-20k { background: linear-gradient(135deg, #15803d, #16a34a); }
+    .money-50k { background: linear-gradient(135deg, #1d4ed8, #2563eb); }
+    .money-100k { background: linear-gradient(135deg, #be123c, #e11d48); }
+
+    .money-center { text-align: center; font-size: 1.5rem; letter-spacing: 1px; }
+    .money-bottom { text-align: right; font-size: 0.8rem; opacity: 0.9; }
+
+    .mystery-clue-box {
+      background: #fef3c7;
+      border: 2px dashed #f59e0b;
+      border-radius: 12px;
+      padding: 10px 16px;
+      margin: 12px auto;
+      max-width: 400px;
+      text-align: center;
+      font-weight: 600;
+      color: #92400e;
+    }
+
+    .mystery-peek-card {
+      width: 260px;
+      height: 130px;
+      border-radius: 12px;
+      position: relative;
+      margin: 1rem auto;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .mystery-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #3b82f6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2.5rem;
+      clip-path: polygon(0 0, 75% 0, 45% 100%, 0% 100%);
+      z-index: 2;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+
+    .modal-backdrop.active { display: flex; }
+
+    .modal-box {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      max-width: 450px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+      animation: popIn 0.2s ease-out;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+    .modal-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem; color: var(--text); }
+    .modal-desc { color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.4; }
+
+    .pairing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 1.5rem 0;
+    }
+
+    .pair-col-header {
+      font-weight: bold;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 5px;
+    }
+
+    .pair-card {
+      background: #f8fafc;
+      border: 2px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 12px 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      min-height: 55px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pair-card.selected {
+      border-color: var(--primary);
+      background: #dbeafe;
+      color: var(--primary-dark);
+    }
+
+    .pair-card.matched {
+      border-color: var(--accent);
+      background: #dcfce7;
+      color: #15803d;
+      cursor: default;
+      pointer-events: none;
+      opacity: 0.85;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 1rem 0;
+    }
+
+    .btn-option {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .btn-option:hover {
+      border-color: var(--primary);
+      background: #eff6ff;
+    }
+
+    .progress-bar-bg {
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    @media (max-width: 600px) {
+      .pairing-grid { grid-template-columns: 1fr; }
+      .options-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-area">
+      <span>🎒</span> <span id="header-student-label">SDN 58 LUBUKLINGGAU</span>
+    </div>
+    <div class="header-controls">
+      <div class="badge-score" id="global-score">Skor: 0/100</div>
+      <button class="btn-header" id="toggle-music" onclick="toggleMusic()" title="Musik BGM">🎵</button>
+      <button class="btn-header" id="toggle-sound" onclick="toggleSound()" title="Efek Suara">🔊</button>
+      <button class="btn-header" id="toggle-fullscreen" onclick="toggleFullscreen()" title="Layar Penuh">⛶</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- SCREEN 1: INPUT NAMA & LANDING -->
+    <div id="screen-input-nama" class="screen active">
+      <div class="hero">
+        <h1 class="hero-title">MISI PETUALANGAN RUPIAH</h1>
+        <div class="hero-subtitle">Jelajah Kantin Sekolah (Kelas V SD - SDN 58 Lubuklinggau)</div>
+        <div class="hero-avatar">👦🏻</div>
+        <div class="input-nama-group">
+          <label for="student-name-input">Masukkan Nama Lengkap Siswa:</label>
+          <input type="text" id="student-name-input" placeholder="Contoh: Dini Saputri" autocomplete="off">
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 450px; margin: 0 auto 1rem;">
+          Media Pembelajaran Matematika Berbasis Deep Learning & Model Problem Based Learning (PBL) Sesuai Modul Ajar Pelajaran 2.
+        </p>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="submitStudentName()">🎮 MULAI PETUALANGAN</button>
+          <button class="btn btn-secondary" onclick="showModal('Cara Bermain', 'Pelajari 9 bab modul ajar mendalam secara bertahap, lalu selesaikan Mini Game dan Misi Kantin PBL untuk mendapatkan rapor skor maksimal 100!')">ℹ️ CARA BERMAIN</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN MENU (SIMPLE UI - 6 MENU UTAMA) -->
+    <div id="screen-menu" class="screen">
+      <h2>Peta Misi Pembelajaran Bertahap</h2>
+      <p style="color: var(--text-muted); margin-bottom: 1rem;" id="menu-subtitle-greeting">Selesaikan tahapan secara berurutan dari Modul Materi!</p>
+      
+      <div class="menu-grid-simple">
+        <!-- 1. MATERI -->
+        <div class="menu-card-simple" id="card-materi" onclick="clickMenuBlock('materi')">
+          <span class="badge-status-simple status-open" id="status-materi">Dibuka</span>
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📖</div>
+          <div class="menu-title" style="font-size:1.1rem; font-weight:bold; margin-bottom:4px;">1. Modul Materi Sesuai Modul</div>
+          <div class="menu-desc">9 Bab Pelajaran 2 (Fase C)</div>
+        </div>
+
+        <!-- 2. MINI GAME 1 -->
+        <div class="menu-card-simple locked" id="card-game1" onclick="clickMenuBlock('game1')">
+          <span class="badge-status-simple status-lock" id="status-game1">Terkunci</span>
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔍</div>
+          <div class="menu-title" style="font-size:1.1rem; font-weight:bold; margin-bottom:4px;">2. Mini Game 1: Tebak Uang</div>
+          <div class="menu-desc">Pecahan Rp5.000 s.d Rp100.000</div>
+        </div>
+
+        <!-- 3. MINI GAME 2 -->
+        <div class="menu-card-simple locked" id="card-game2" onclick="clickMenuBlock('game2')">
+          <span class="badge-status-simple status-lock" id="status-game2">Terkunci</span>
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🧩</div>
+          <div class="menu-title" style="font-size:1.1rem; font-weight:bold; margin-bottom:4px;">3. Mini Game 2: Pasangkan Uang</div>
+          <div class="menu-desc">Nominal, notasi baku & pembacaan</div>
+        </div>
+
+        <!-- 4. MISI PBL KANTIN -->
+        <div class="menu-card-simple locked" id="card-pbl" onclick="clickMenuBlock('pbl')">
+          <span class="badge-status-simple status-lock" id="status-pbl">Terkunci</span>
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📋</div>
+          <div class="menu-title" style="font-size:1.1rem; font-weight:bold; margin-bottom:4px;">4. Misi Kantin PBL</div>
+          <div class="menu-desc">3 Studi Kasus Sesuai LKPD Modul</div>
+        </div>
+
+        <!-- 5. KUIS KILAT -->
+        <div class="menu-card-simple locked" id="card-quiz" onclick="clickMenuBlock('quiz')">
+          <span class="badge-status-simple status-lock" id="status-quiz">Terkunci</span>
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">⚡</div>
+          <div class="menu-title" style="font-size:1.1rem; font-weight:bold; margin-bottom:4px;">5. Kuis Kilat Rupiah</div>
+          <div class="menu-desc">Asesmen formatif individu akhir</div>
+        </div>
+
+        <!-- 6. RAPOR -->
+        <div class="menu-card-simple locked" id="card-result" onclick="clickMenuBlock('result')">
+          <span class="badge-status-simple status-lock" id="status-result">Terkunci</span>
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🏆</div>
+          <div class="menu-title" style="font-size:1.1rem; font-weight:bold; margin-bottom:4px;">6. Rapor Hasil Belajar</div>
+          <div class="menu-desc">Predikat total skor siswa (Maks 100)</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 2rem; text-align: center;">
+        <button class="btn btn-secondary" onclick="navTo('screen-input-nama')">👤 Ganti Nama Siswa</button>
+      </div>
+    </div>
+
+    <!-- MATERI SCREEN -->
+    <div id="screen-materi" class="screen">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span id="materi-step-indicator" style="font-weight:bold; color:var(--primary);">Bab 1 dari 9</span>
+        <button class="btn btn-secondary" style="padding:4px 10px; font-size:0.8rem;" onclick="navTo('screen-menu')">✖ Kembali ke Beranda</button>
+      </div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="materi-progress"></div></div>
+
+      <div id="materi-content-area" style="min-height: 280px; margin: 1.5rem 0; line-height: 1.7;"></div>
+
+      <div class="btn-group" style="justify-content: space-between;">
+        <button class="btn btn-secondary" id="btn-materi-prev" onclick="prevMateri()">⬅ Sebelumnya</button>
+        <button class="btn btn-primary" id="btn-materi-next" onclick="nextMateri()">Lanjut Bab ➡</button>
+      </div>
+    </div>
+
+    <!-- MINI GAME 1 -->
+    <div id="screen-game1" class="screen">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3>Mini Game 1: Tebak Uang Misteri</h3>
+        <span id="g1-round-indicator" style="font-weight:bold; color:var(--primary);">Ronde 1/5</span>
+      </div>
+      <p style="color: var(--text-muted); font-size:0.9rem; margin-top:4px;">Amati intipan pecahan uang kertas dan baca petunjuk kontekstualnya!</p>
+
+      <div id="g1-card-container"></div>
+      <div class="mystery-clue-box" id="g1-clue-text">Petunjuk: Loading...</div>
+      <div class="options-grid" id="g1-options"></div>
+
+      <div class="btn-group" style="margin-top:1.5rem;">
+        <button class="btn btn-secondary" onclick="navTo('screen-menu')">🔙 Menu Utama</button>
+      </div>
+    </div>
+
+    <!-- MINI GAME 2 -->
+    <div id="screen-game2" class="screen">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3>Mini Game 2: Pasangkan Uang</h3>
+        <span id="g2-progress-indicator" style="font-weight:bold; color:var(--primary);">Pasangan 0 dari 5</span>
+      </div>
+      <p style="color: var(--text-muted); font-size:0.9rem; margin-top:4px;">Pilih 1 Nominal, 1 Penulisan Baku, dan 1 Cara Membaca yang cocok lalu klik PERIKSA!</p>
+
+      <div class="pairing-grid">
+        <div>
+          <div class="pair-col-header">1. NOMINAL</div>
+          <div id="col-nominal" style="display:flex; flex-direction:column; gap:8px;"></div>
+        </div>
+        <div>
+          <div class="pair-col-header">2. PENULISAN BAKU</div>
+          <div id="col-writing" style="display:flex; flex-direction:column; gap:8px;"></div>
+        </div>
+        <div>
+          <div class="pair-col-header">3. CARA MEMBACA</div>
+          <div id="col-reading" style="display:flex; flex-direction:column; gap:8px;"></div>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-accent" onclick="checkPairing()">🔍 PERIKSA PASANGAN</button>
+        <button class="btn btn-secondary" onclick="navTo('screen-menu')">🔙 Menu Utama</button>
+      </div>
+    </div>
+
+    <!-- MISI PBL KANTIN -->
+    <div id="screen-pbl" class="screen">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3>🏫 Misi Kantin Sekolah (PBL)</h3>
+        <span id="pbl-progress-indicator" style="font-weight:bold; color:var(--primary);">Kasus 1 dari 3</span>
+      </div>
+      <p style="color: var(--text-muted); margin-bottom:1rem;">Pecahkan studi kasus kontekstual kantin sekolah sesuai Modul Ajar SDN 58 Lubuklinggau!</p>
+      
+      <div style="background:#f8fafc; border:2px dashed #cbd5e1; border-radius:12px; padding:1.2rem; margin-bottom:1rem;" id="pbl-scenario-box"></div>
+      <div class="options-grid" id="pbl-options"></div>
+
+      <div class="btn-group" style="margin-top:1.5rem;">
+        <button class="btn btn-secondary" onclick="navTo('screen-menu')">🔙 Menu Utama</button>
+      </div>
+    </div>
+
+    <!-- KUIS KILAT -->
+    <div id="screen-game3" class="screen">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3>⚡ Kuis Kilat Rupiah</h3>
+        <span id="quiz-progress" style="font-weight:bold; color:var(--primary);">Soal 1/5</span>
+      </div>
+
+      <div style="font-size:1.1rem; font-weight:600; margin:1.5rem 0;" id="quiz-question">Soal...</div>
+      <div class="options-grid" id="quiz-options"></div>
+
+      <div class="btn-group" style="margin-top:1.5rem;">
+        <button class="btn btn-secondary" onclick="navTo('screen-menu')">🔙 Menu Utama</button>
+      </div>
+    </div>
+
+    <!-- HASIL BELAJAR & RAPOR -->
+    <div id="screen-result" class="screen" style="text-align: center;">
+      <div style="font-size: 4rem; margin-bottom: 0.5rem;" id="res-badge">🏆</div>
+      <h2 id="res-title">Penjelajah Rupiah Hebat!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 1.5rem;" id="res-subtitle">Laporan Hasil Belajar Matematika Fase C</p>
+
+      <div style="background:#f8fafc; border-radius:12px; padding:1.2rem; max-width:400px; margin:0 auto 1.5rem; text-align:left;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+          <span>Nama Siswa:</span> <strong id="res-name">-</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+          <span>Sekolah:</span> <strong>SDN 58 Lubuklinggau</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+          <span>Skor Tebak Uang (Maks 20):</span> <strong id="res-g1">0 / 20</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+          <span>Skor Pasangkan (Maks 20):</span> <strong id="res-g2">0 / 20</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+          <span>Skor Misi PBL (Maks 30):</span> <strong id="res-pbl">0 / 30</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+          <span>Skor Kuis Kilat (Maks 30):</span> <strong id="res-g3">0 / 30</strong>
+        </div>
+        <hr style="margin:10px 0; border:none; border-top:1px solid #e2e8f0;">
+        <div style="display:flex; justify-content:space-between; font-size:1.1rem;">
+          <span>Total Skor Akhir:</span> <strong id="res-total" style="color:var(--primary);">0 / 100</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:0.95rem;">
+          <span>Predikat Modul:</span> <strong id="res-predikat" style="color:var(--accent);">-</strong>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="resetProgress()">🔄 Ulangi Petualangan</button>
+        <button class="btn btn-secondary" onclick="navTo('screen-menu')">🏠 Menu Utama</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL POPUP -->
+  <div class="modal-backdrop" id="custom-modal">
+    <div class="modal-box">
+      <div class="modal-icon" id="modal-icon">💡</div>
+      <div class="modal-title" id="modal-title">Judul Modal</div>
+      <div class="modal-desc" id="modal-desc">Deskripsi penjelasan modal...</div>
+      <button class="btn btn-primary" id="modal-ok-btn" style="width:100%; justify-content:center;" onclick="closeModal()">Mengerti!</button>
+    </div>
+  </div>
+
+  <script>
+    // Audio Context Safe Lazy Initialization
+    let soundEnabled = true;
+    let musicEnabled = false;
+    let bgmInterval = null;
+    let audioCtx = null;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          audioCtx = new AudioContextClass();
+        }
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playSound(type) {
+      if (!soundEnabled) return;
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      if (type === 'correct') {
+        osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+        osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.25, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.3);
+      } else if (type === 'wrong') {
+        osc.frequency.setValueAtTime(220, ctx.currentTime);
+        osc.frequency.setValueAtTime(174.61, ctx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.25, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.35);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.35);
+      }
+    }
+
+    const bgmNotes = [261.63, 329.63, 392.00, 523.25, 440.00, 392.00, 329.63, 293.66]; 
+    let bgmIndex = 0;
+
+    function playBgmNote() {
+      if (!musicEnabled) return;
+      const ctx = getAudioContext();
+      if (!ctx) return;
+
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(bgmNotes[bgmIndex], ctx.currentTime);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      gain.gain.setValueAtTime(0.12, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.38);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.38);
+
+      bgmIndex = (bgmIndex + 1) % bgmNotes.length;
+    }
+
+    function startMusicAuto() {
+      if (!musicEnabled) {
+        musicEnabled = true;
+        const btn = document.getElementById('toggle-music');
+        if (btn) {
+          btn.textContent = '🎵';
+          btn.style.opacity = '1';
+        }
+        if (bgmInterval) clearInterval(bgmInterval);
+        bgmInterval = setInterval(playBgmNote, 400);
+      }
+    }
+
+    function toggleMusic() {
+      musicEnabled = !musicEnabled;
+      const btn = document.getElementById('toggle-music');
+      if (btn) {
+        btn.textContent = musicEnabled ? '🎵' : '🔇';
+        btn.style.opacity = musicEnabled ? '1' : '0.6';
+      }
+
+      if (musicEnabled) {
+        if (!bgmInterval) bgmInterval = setInterval(playBgmNote, 400);
+      } else {
+        if (bgmInterval) {
+          clearInterval(bgmInterval);
+          bgmInterval = null;
+        }
+      }
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById('toggle-sound');
+      if (btn) {
+        btn.textContent = soundEnabled ? '🔊' : '🔇';
+        btn.style.opacity = soundEnabled ? '1' : '0.6';
+      }
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.log("Error attempting to enable fullscreen:", err);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    let state = {
+      studentName: "",
+      scoreG1: 0, 
+      scoreG2: 0, 
+      scorePBL: 0, 
+      scoreG3: 0, 
+      materiDone: false,
+      materiIndex: 0,
+      g1Round: 0,
+      g2Matches: 0,
+      matchedNominals: [],
+      pblStage: 0,
+      g3Index: 0,
+      unlocked: {
+        materi: true,
+        game1: false,
+        game2: false,
+        pbl: false,
+        quiz: false,
+        result: false
+      },
+      modalCallback: null
+    };
+
+    function submitStudentName() {
+      const input = document.getElementById('student-name-input');
+      const nameVal = input.value.trim();
+      if (!nameVal) {
+        showModal('Nama Belum Diisi', 'Silakan masukkan nama lengkap siswa terlebih dahulu sebelum memulai petualangan!', '⚠️');
+        return;
+      }
+      state.studentName = nameVal;
+      document.getElementById('header-student-label').textContent = `SDN 58 (${state.studentName})`;
+      document.getElementById('menu-subtitle-greeting').textContent = `Halo ${state.studentName}! Selesaikan tahapan menu secara berurutan dari Modul Materi.`;
+      
+      startMusicAuto();
+      navTo('screen-menu');
+    }
+
+    const MONEY_DATA = [
+      { nominal: 5000, code: '5k', write: 'Rp5.000,00', read: 'lima ribu rupiah', color: '#a16207', clue: 'Uang kertas pecahan 5.000 rupiah sesuai modul ajar' },
+      { nominal: 10000, code: '10k', write: 'Rp10.000,00', read: 'sepuluh ribu rupiah', color: '#ea580c', clue: 'Uang kertas pecahan 10.000 rupiah sesuai modul ajar' },
+      { nominal: 20000, code: '20k', write: 'Rp20.000,00', read: 'dua puluh ribu rupiah', color: '#16a34a', clue: 'Uang kertas pecahan 20.000 rupiah sesuai modul ajar' },
+      { nominal: 50000, code: '50k', write: 'Rp50.000,00', read: 'lima puluh ribu rupiah', color: '#2563eb', clue: 'Uang kertas pecahan 50.000 rupiah sesuai modul ajar' },
+      { nominal: 100000, code: '100k', write: 'Rp100.000,00', read: 'seratus ribu rupiah', color: '#e11d48', clue: 'Uang kertas pecahan 100.000 rupiah sesuai modul ajar' }
+    ];
+
+    const MATERI_LIST = [
+      {
+        title: "Bab 1: Identitas & Pengenalan Mata Uang Rupiah",
+        html: `<p style="margin-bottom:0.8rem;">Sesuai Modul Ajar Pelajaran 2 Kelas V SDN 58 Lubuklinggau, uang adalah alat pembayaran yang sah. Mata uang Indonesia adalah rupiah, dan setiap lembar uang memiliki nilai (nominal) tertentu.</p>
+               <p style="margin-bottom:0.8rem;">Peserta didik mengenal uang dalam kehidupan sehari-hari (seperti di kantin sekolah) dan telah mempelajari mata uang Rp100,00 sampai Rp5.000,00 di kelas III.</p>
+               <div style="background:#e0f2fe; padding:12px; border-radius:10px; text-align:center;">
+                 <span style="font-size:2rem;">🏫 💵</span>
+                 <p style="font-weight:600; margin-top:6px;">Profil Lulusan: Keimanan, Kewargaan, Kolaborasi, Komunikasi, Kemandirian, Penalaran Kritis.</p>
+               </div>`
+      },
+      {
+        title: "Bab 2: Faktual & Konseptual Mata Uang Kertas",
+        html: `<p style="margin-bottom:0.8rem;">Materi Faktual: Uang kertas terdiri atas pecahan <strong>Rp5.000; Rp10.000; Rp20.000; Rp50.000; dan Rp100.000</strong>.</p>
+               <p style="margin-bottom:0.8rem;">Materi Konseptual: Uang berfungsi sebagai alat tukar pembayaran. Nilai uang ditulis dengan lambang Rp, angka dengan titik pemisah ribuan, dan “,00”, serta dapat dibaca dengan kata-kata.</p>
+               <div style="background:#fef3c7; border:2px dashed #f59e0b; padding:10px; border-radius:10px; text-align:center; font-weight:bold; color:#92400e;">
+                 Contoh Faktual: Rp10.000,00 dibaca “sepuluh ribu rupiah”.
+               </div>`
+      },
+      {
+        title: "Bab 3: Prosedur Penulisan & Pembacaan Nilai Uang",
+        html: `<p style="margin-bottom:0.8rem;">Materi Prosedural:</p>
+               <ol style="text-align:left; margin-left:1.5rem; line-height:1.6;">
+                 <li>Amati angka pada uang.</li>
+                 <li>Tulis dengan aturan baku (awali lambang <strong>Rp</strong>, beri titik pemisah ribuan, dan akhiri <strong>,00</strong>).</li>
+                 <li>Baca dengan kata-kata diikuti kata <strong>“rupiah”</strong>.</li>
+               </ol>
+               <p style="margin-top:10px; font-weight:600;">Langkah PBL: Memahami masalah ➔ Merencanakan ➔ Menyelidiki ➔ Menyajikan ➔ Mengevaluasi.</p>`
+      },
+      {
+        title: "Bab 4: Metakognitif & Refleksi Ketelitian Angka Nol",
+        html: `<p style="margin-bottom:0.8rem;">Materi Metakognitif: Refleksi mendalam tentang kemudahan atau kesulitan serta tingkat ketelitian saat menulis dan membaca nilai uang.</p>
+               <div style="background:#dcfce7; padding:10px; border-radius:8px; text-align:center; font-weight:600; color:#166534;">
+                 "Pemahaman Bermakna: Nilai uang harus ditulis dan dibaca dengan teliti agar transaksi tepat dan jujur; salah satu angka nol atau titik dapat mengubah nilai uang."
+               </div>`
+      },
+      {
+        title: "Bab 5: Pertanyaan Pemantik Pembelajaran Mendalam",
+        html: `<p style="margin-bottom:0.8rem;">Berdasarkan Modul Ajar, diskusikan 3 Pertanyaan Pemantik berikut:</p>
+               <ul style="text-align:left; margin-left:1.5rem; line-height:1.8;">
+                 <li>1) Dengan apa kamu membayar makanan di kantin?</li>
+                 <li>2) Bagaimana menulis dan membaca nilai uang dengan benar?</li>
+                 <li>3) Apa akibatnya jika terjadi kekeliruan pencatatan?</li>
+               </ul>`
+      },
+      {
+        title: "Bab 6: Model Problem Based Learning (PBL) & Diskusi Kelompok",
+        html: `<p style="margin-bottom:0.8rem;">Siswa dibagi menjadi 5 kelompok di kelas, menerima LKPD serta kartu uang tiruan untuk menyelidiki penulisan dan pembacaan nilai uang secara kolaboratif.</p>
+               <p style="margin-bottom:0.8rem;">Setiap kelompok membagi peran: pengamat, penulis, pembaca, dan penyaji presentasi.</p>`
+      },
+      {
+        title: "Bab 7: Integrasi Sumber & Buku Mahir Matematika 5",
+        html: `<p style="margin-bottom:0.8rem;">Sumber belajar didukung oleh buku <em>Mahir Matematika 5 Kelas V, Pelajaran 2, hlm. 27–29</em>, PPT interaktif, lembar kerja peserta didik (LKPD), dan kartu nilai uang.</p>`
+      },
+      {
+        title: "Bab 8: Pencegahan Kekeliruan & Evaluasi Papan Harga Kantin",
+        html: `<p style="margin-bottom:0.8rem;">Siswa dilatih menganalisis kekeliruan umum seperti kasus Dina atau Rudi terkait penulisan angka nol, penggunaan titik ribuan, dan pembacaan nominal.</p>`
+      },
+      {
+        title: "Bab 9: Latihan Pengecekan Pemahaman Modul",
+        html: `<p style="margin-bottom:1rem; font-weight:600;">Bagaimana cara membaca uang yang bertuliskan Rp20.000,00 berdasarkan modul?</p>
+               <div style="display:flex; flex-direction:column; gap:8px;">
+                 <button class="btn-option" onclick="checkMateriQuiz(false)">Dua ribu rupiah</button>
+                 <button class="btn-option" onclick="checkMateriQuiz(true)">Dua puluh ribu rupiah</button>
+                 <button class="btn-option" onclick="checkMateriQuiz(false)">Dua ratus ribu rupiah</button>
+               </div>`
+      }
+    ];
+
+    function updateHeaderScore() {
+      const total = state.scoreG1 + state.scoreG2 + state.scorePBL + state.scoreG3;
+      document.getElementById('global-score').textContent = `Skor: ${total}/100`;
+    }
+
+    function navTo(screenId) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      const target = document.getElementById(screenId);
+      if (target) target.classList.add('active');
+      
+      if (screenId === 'screen-menu') renderMenu();
+      if (screenId === 'screen-game1') startG1Round();
+      if (screenId === 'screen-game2') initG2();
+      if (screenId === 'screen-pbl') initPBLStage();
+      if (screenId === 'screen-game3') startQuiz();
+      if (screenId === 'screen-result') renderResult();
+    }
+
+    function showModal(title, desc, icon = '💡', callback = null) {
+      document.getElementById('modal-icon').textContent = icon;
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-desc').textContent = desc;
+      state.modalCallback = callback;
+      document.getElementById('custom-modal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('custom-modal').classList.remove('active');
+      if (typeof state.modalCallback === 'function') {
+        const cb = state.modalCallback;
+        state.modalCallback = null;
+        cb();
+      }
+    }
+
+    function renderMenu() {
+      const blocks = ['materi', 'game1', 'game2', 'pbl', 'quiz', 'result'];
+      blocks.forEach(b => {
+        const card = document.getElementById(`card-${b}`);
+        const badge = document.getElementById(`status-${b}`);
+        if (!card || !badge) return;
+        if (state.unlocked[b]) {
+          card.classList.remove('locked');
+          badge.textContent = 'Dibuka';
+          badge.className = 'badge-status-simple status-open';
+        } else {
+          card.classList.add('locked');
+          badge.textContent = 'Terkunci';
+          badge.className = 'badge-status-simple status-lock';
+        }
+      });
+    }
+
+    function unlockBlock(blockName) {
+      state.unlocked[blockName] = true;
+    }
+
+    function clickMenuBlock(blockName) {
+      if (!state.unlocked[blockName]) {
+        showModal('Tahapan Terkunci 🔒', 'Selesaikan tahapan sebelumnya secara berurutan untuk membuka menu ini!');
+        return;
+      }
+      if (blockName === 'materi') {
+        state.materiIndex = 0;
+        navTo('screen-materi');
+        renderMateri();
+      } else if (blockName === 'game1') navTo('screen-game1');
+      else if (blockName === 'game2') navTo('screen-game2');
+      else if (blockName === 'pbl') navTo('screen-pbl');
+      else if (blockName === 'quiz') navTo('screen-game3');
+      else if (blockName === 'result') navTo('screen-result');
+    }
+
+    function renderMateri() {
+      const m = MATERI_LIST[state.materiIndex];
+      document.getElementById('materi-step-indicator').textContent = `Bab ${state.materiIndex + 1} dari ${MATERI_LIST.length}`;
+      document.getElementById('materi-progress').style.width = `${((state.materiIndex + 1) / MATERI_LIST.length) * 100}%`;
+      
+      document.getElementById('materi-content-area').innerHTML = `
+        <h3 style="color:var(--primary); margin-bottom:1rem;">${m.title}</h3>
+        ${m.html}
+      `;
+
+      document.getElementById('btn-materi-prev').style.visibility = state.materiIndex === 0 ? 'hidden' : 'visible';
+    }
+
+    function nextMateri() {
+      if (state.materiIndex < MATERI_LIST.length - 1) {
+        state.materiIndex++;
+        renderMateri();
+      } else {
+        state.materiDone = true;
+        unlockBlock('game1');
+        showModal('Modul Materi Selesai! 🎉', `Luar biasa ${state.studentName}! Kamu telah membaca seluruh materi Modul Pelajaran 2. Mini Game 1 kini resmi terbuka di beranda!`, '🌟', () => {
+          navTo('screen-menu');
+        });
+      }
+    }
+
+    function prevMateri() {
+      if (state.materiIndex > 0) {
+        state.materiIndex--;
+        renderMateri();
+      }
+    }
+
+    function checkMateriQuiz(isCorrect) {
+      if (isCorrect) {
+        playSound('correct');
+        showModal('Jawaban Tepat! 👏', 'Rp20.000,00 dibaca "dua puluh ribu rupiah" sesuai modul.');
+      } else {
+        playSound('wrong');
+        showModal('Kurang Tepat', 'Perhatikan jumlah angka nol dan penyebutan bilangan pada modul.');
+      }
+    }
+
+    function startG1Round() {
+      if (state.g1Round >= MONEY_DATA.length) {
+        unlockBlock('game2');
+        showModal('Mini Game 1 Selesai! 🏆', `Skor Tebak Uang: ${state.scoreG1} / 20. Mini Game 2 kini terbuka di beranda!`, '🌟', () => {
+          state.g1Round = 0;
+          navTo('screen-menu');
+        });
+        return;
+      }
+
+      const item = MONEY_DATA[state.g1Round];
+      document.getElementById('g1-round-indicator').textContent = `Ronde ${state.g1Round + 1} dari 5`;
+
+      document.getElementById('g1-card-container').innerHTML = `
+        <div class="mystery-peek-card">
+          <div class="money-card money-${item.code}" style="margin:0; width:100%; height:100%;">
+            <div>INDONESIA</div>
+            <div class="money-center">${item.write}</div>
+            <div class="money-bottom">${item.read}</div>
+          </div>
+          <div class="mystery-overlay" id="g1-overlay">?</div>
+        </div>
+      `;
+
+      document.getElementById('g1-clue-text').textContent = `💡 Petunjuk Modul: ${item.clue}`;
+
+      const options = [...MONEY_DATA].sort(() => Math.random() - 0.5);
+      document.getElementById('g1-options').innerHTML = options.map(opt => `
+        <button class="btn-option" onclick="answerG1(${opt.nominal})">${opt.write}</button>
+      `).join('');
+    }
+
+    function answerG1(selectedNominal) {
+      const correctItem = MONEY_DATA[state.g1Round];
+      const overlay = document.getElementById('g1-overlay');
+      if (overlay) overlay.style.display = 'none';
+
+      let isCorrect = (selectedNominal === correctItem.nominal);
+      if (isCorrect) {
+        playSound('correct');
+        state.scoreG1 += 4;
+        updateHeaderScore();
+      } else {
+        playSound('wrong');
+      }
+
+      state.g1Round++;
+      let msg = isCorrect ? `Tebakan Tepat! Benar pecahan ${correctItem.write}. [+4 Poin]` : `Kurang Tepat. Jawaban benar: ${correctItem.write}.`;
+      
+      showModal(isCorrect ? 'Benar! 🎉' : 'Kurang Tepat ❌', msg, isCorrect ? '✨' : '❌', () => {
+        startG1Round();
+      });
+    }
+
+    function initG2() {
+      g2Selected = { nominal: null, write: null, read: null };
+      state.g2Matches = 0;
+      state.matchedNominals = [];
+      document.getElementById('g2-progress-indicator').textContent = `Pasangan 0 dari 5`;
+      renderG2BoardOnce();
+    }
+
+    let g2Selected = { nominal: null, write: null, read: null };
+
+    function renderG2BoardOnce() {
+      const shuffledNom = [...MONEY_DATA].sort(() => Math.random() - 0.5);
+      const shuffledWrite = [...MONEY_DATA].sort(() => Math.random() - 0.5);
+      const shuffledRead = [...MONEY_DATA].sort(() => Math.random() - 0.5);
+
+      document.getElementById('col-nominal').innerHTML = shuffledNom.map(m => `
+        <div class="pair-card" id="nom-${m.nominal}" onclick="selectG2('nominal', ${m.nominal})">${m.nominal}</div>
+      `).join('');
+
+      document.getElementById('col-writing').innerHTML = shuffledWrite.map(m => `
+        <div class="pair-card" id="write-${m.nominal}" onclick="selectG2('write', ${m.nominal})">${m.write}</div>
+      `).join('');
+
+      document.getElementById('col-reading').innerHTML = shuffledRead.map(m => `
+        <div class="pair-card" id="read-${m.nominal}" onclick="selectG2('read', ${m.nominal})">${m.read}</div>
+      `).join('');
+    }
+
+    function selectG2(type, id) {
+      if (state.matchedNominals.includes(id)) return;
+      
+      document.querySelectorAll(`[id^="${type === 'nominal' ? 'nom' : type === 'write' ? 'write' : 'read'}-"]`).forEach(c => {
+        if (!c.classList.contains('matched')) c.classList.remove('selected');
+      });
+
+      g2Selected[type] = id;
+      const elId = type === 'nominal' ? `nom-${id}` : type === 'write' ? `write-${id}` : `read-${id}`;
+      const el = document.getElementById(elId);
+      if (el && !el.classList.contains('matched')) {
+        el.classList.add('selected');
+      }
+    }
+
+    function checkPairing() {
+      if (!g2Selected.nominal || !g2Selected.write || !g2Selected.read) {
+        showModal('Lengkapi Pilihan', 'Pilih 1 item dari tiap kolom sebelum memeriksa!');
+        return;
+      }
+
+      if (g2Selected.nominal === g2Selected.write && g2Selected.write === g2Selected.read) {
+        playSound('correct');
+        const matchedVal = g2Selected.nominal;
+        state.scoreG2 += 4;
+        updateHeaderScore();
+        state.g2Matches++;
+        state.matchedNominals.push(matchedVal);
+
+        document.getElementById(`nom-${matchedVal}`).classList.remove('selected');
+        document.getElementById(`write-${matchedVal}`).classList.remove('selected');
+        document.getElementById(`read-${matchedVal}`).classList.remove('selected');
+
+        document.getElementById(`nom-${matchedVal}`).classList.add('matched');
+        document.getElementById(`write-${matchedVal}`).classList.add('matched');
+        document.getElementById(`read-${matchedVal}`).classList.add('matched');
+
+        document.getElementById('g2-progress-indicator').textContent = `Pasangan ${state.g2Matches} dari 5`;
+        g2Selected = { nominal: null, write: null, read: null };
+
+        if (state.g2Matches >= 5) {
+          unlockBlock('pbl');
+          showModal('Mini Game 2 Selesai! 🏆', `Skor Pasangkan Uang: ${state.scoreG2} / 20. Misi Kantin PBL kini terbuka di beranda!`, '🌟', () => {
+            navTo('screen-menu');
+          });
+        } else {
+          showModal('Pasangan Cocok! 🎯', 'Komponen tepat sesuai kaidah modul! [+4 Poin]', '✅');
+        }
+      } else {
+        playSound('wrong');
+        showModal('Belum Cocok', 'Nominal, penulisan baku, atau cara membaca belum sesuai. Periksa kembali.');
+      }
+    }
+
+    const PBL_CASES = [
+      {
+        title: "Studi Kasus 1: Kasus Dina (Asesmen Formatif Soal 3)",
+        scenario: "Dina membayar jajan di kantin dengan uang bertuliskan 20000, tetapi menulis “Rp2.000,00” dan membacanya “dua ribu rupiah”. Manakah analisis yang benar terhadap tindakan Dina?",
+        opts: [
+          { text: "Tulisan dan bacaan Dina sudah benar sesuai kaidah modul", correct: false },
+          { text: "Tulisan Dina salah karena kurang satu angka nol, sehingga terjadi selisih nilai uang", correct: true },
+          { text: "Dina membayar menggunakan pecahan seratus ribu rupiah", correct: false }
+        ]
+      },
+      {
+        title: "Studi Kasus 2: Analisis Papan Harga Kantin (Asesmen Akhir Soal 4)",
+        scenario: "Pada papan harga kantin tertulis: Nasi uduk Rp10000,00 (\"sepuluh ribu rupiah\"), Mi ayam Rp20.000,00 (\"dua rupiah\"), Jus alpukat Rp5.00,00. Manakah yang mengalami kekeliruan pencatatan?",
+        opts: [
+          { text: "Semua tulisan harga di papan kantin sudah benar tanpa ada kesalahan", correct: false },
+          { text: "Harga Mi ayam dan Jus alpukat keliru karena salah penulisan titik ribuan dan angka nol", correct: true },
+          { text: "Harga Nasi uduk bernilai seratus ribu rupiah", correct: false }
+        ]
+      },
+      {
+        title: "Studi Kasus 3: Pendapat Rudi (Asesmen Akhir Soal 5)",
+        scenario: "Rudi berkata, \"Uang Rp50.000,00 dibaca lima ribu rupiah karena nolnya tidak perlu dibaca.\" Bagaimanakah tanggapan yang benar?",
+        opts: [
+          { text: "Pendapat Rudi benar karena angka nol di belakang tidak penting", correct: false },
+          { text: "Pendapat Rudi keliru karena jumlah angka nol menentukan nilai ribuan dan pembacaan nominal", correct: true },
+          { text: "Rudi sedang berbelanja di pasar tradisional", correct: false }
+        ]
+      }
+    ];
+
+    function initPBLStage() {
+      if (state.pblStage >= PBL_CASES.length) {
+        unlockBlock('quiz');
+        showModal('Misi PBL Kantin Selesai! 🎒', `Skor Misi Kantin: ${state.scorePBL} / 30. Kuis Kilat kini terbuka di beranda!`, '🌟', () => {
+          state.pblStage = 0;
+          navTo('screen-menu');
+        });
+        return;
+      }
+
+      const currentCase = PBL_CASES[state.pblStage];
+      document.getElementById('pbl-progress-indicator').textContent = `Kasus ${state.pblStage + 1} dari 3`;
+
+      document.getElementById('pbl-scenario-box').innerHTML = `
+        <div style="font-weight:bold; color:var(--primary); margin-bottom:6px;">📋 ${currentCase.title}</div>
+        <p style="line-height:1.6;">${currentCase.scenario}</p>
+      `;
+
+      const shuffledOpts = [...currentCase.opts].sort(() => Math.random() - 0.5);
+      document.getElementById('pbl-options').innerHTML = shuffledOpts.map(opt => `
+        <button class="btn-option" onclick="answerPBL(${opt.correct})">${opt.text}</button>
+      `).join('');
+    }
+
+    function answerPBL(isCorrect) {
+      if (isCorrect) {
+        playSound('correct');
+        state.scorePBL += 10;
+        updateHeaderScore();
+        showModal('Analisis Tepat! 🎯', 'Analisis studi kasus modul benar! [+10 Poin]', '✅', () => {
+          state.pblStage++;
+          initPBLStage();
+        });
+      } else {
+        playSound('wrong');
+        showModal('Kurang Tepat', 'Perhatikan kembali konsep notasi dan aturan penulisan uang pada modul.');
+      }
+    }
+
+    const QUIZ_DATA = [
+      { q: "Sebutkan nilai uang dengan kata-kata untuk angka 50000 sesuai modul!", opts: ["Lima ribu rupiah", "Lima puluh ribu rupiah", "Lima ratus ribu rupiah", "Lima puluh rupiah"], a: 1 },
+      { q: "Tuliskan nilai uang sepuluh ribu rupiah dengan benar sesuai notasi baku!", opts: ["Rp 10.000", "Rp10000,00", "Rp10.000,00", "Rp100.00"], a: 2 },
+      { q: "Apa dampak jika kita keliru menuliskan titik pemisah ribuan pada nilai uang?", opts: ["Nilai uang berubah dan merugikan transaksi", "Uang bertambah banyak", "Tidak ada dampak apa pun", "Warna uang berubah"], a: 0 },
+      { q: "Berapa jumlah pecahan uang kertas yang dibahas pada Pelajaran 2 Modul Ajar?", opts: ["Tiga pecahan", "Empat pecahan", "Lima pecahan (Rp5k s.d Rp100k)", "Sepuluh pecahan"], a: 2 },
+      { q: "Nilai uang rupiah dibaca dengan kata-kata diikuti kata...", opts: ["Rupiah", "Lembar", "Koin", "Ribu"], a: 0 }
+    ];
+
+    function startQuiz() {
+      if (state.g3Index >= QUIZ_DATA.length) {
+        unlockBlock('result');
+        navTo('screen-result');
+        return;
+      }
+
+      const q = QUIZ_DATA[state.g3Index];
+      document.getElementById('quiz-progress').textContent = `Soal ${state.g3Index + 1} dari ${QUIZ_DATA.length}`;
+      document.getElementById('quiz-question').textContent = q.q;
+
+      document.getElementById('quiz-options').innerHTML = q.opts.map((opt, idx) => `
+        <button class="btn-option" onclick="answerQuiz(${idx})">${opt}</button>
+      `).join('');
+    }
+
+    function answerQuiz(selectedIdx) {
+      const q = QUIZ_DATA[state.g3Index];
+      let isCorrect = (selectedIdx === q.a);
+      if (isCorrect) {
+        playSound('correct');
+        state.scoreG3 += 6;
+        updateHeaderScore();
+      } else {
+        playSound('wrong');
+      }
+
+      state.g3Index++;
+      let msg = isCorrect ? 'Hebat! Kamu mendapatkan +6 Poin.' : `Jawaban yang benar adalah: ${q.opts[q.a]}`;
+      showModal(isCorrect ? 'Jawaban Benar! 🎯' : 'Kurang Tepat ❌', msg, isCorrect ? '✅' : '❌', () => {
+        startQuiz();
+      });
+    }
+
+    function renderResult() {
+      const total = state.scoreG1 + state.scoreG2 + state.scorePBL + state.scoreG3;
+
+      document.getElementById('res-name').textContent = state.studentName;
+      document.getElementById('res-g1').textContent = `${state.scoreG1} / 20`;
+      document.getElementById('res-g2').textContent = `${state.scoreG2} / 20`;
+      document.getElementById('res-pbl').textContent = `${state.scorePBL} / 30`;
+      document.getElementById('res-g3').textContent = `${state.scoreG3} / 30`;
+      document.getElementById('res-total').textContent = `${total} / 100`;
+
+      let badge = '⭐';
+      let title = 'Penjelajah Rupiah Hebat!';
+      let predikat = 'Sangat Baik (88-100)';
+
+      if (total >= 88) { badge = '🏆'; title = 'Penjelajah Rupiah Hebat!'; predikat = 'Sangat Baik (Pengayaan)'; }
+      else if (total >= 70) { badge = '🥇'; title = 'Jagoan Rupiah Kantin!'; predikat = 'Baik (Penguatan)'; }
+      else if (total >= 50) { badge = '🥈'; title = 'Petualang Rupiah Cermat!'; predikat = 'Cukup (Remedial)'; }
+      else { badge = '💪'; title = 'Tetap Semangat, Belajar Lagi!'; predikat = 'Perlu Bimbingan Intensif'; }
+
+      document.getElementById('res-badge').textContent = badge;
+      document.getElementById('res-title').textContent = title;
+      document.getElementById('res-predikat').textContent = predikat;
+    }
+
+    function resetProgress() {
+      state.scoreG1 = 0;
+      state.scoreG2 = 0;
+      state.scorePBL = 0;
+      state.scoreG3 = 0;
+      state.materiDone = false;
+      state.materiIndex = 0;
+      state.g1Round = 0;
+      state.g2Matches = 0;
+      state.matchedNominals = [];
+      state.pblStage = 0;
+      state.g3Index = 0;
+      state.unlocked = { materi: true, game1: false, game2: false, pbl: false, quiz: false, result: false };
+      
+      updateHeaderScore();
+      showModal('Progres Direset', 'Seluruh progres dan skor dikembalikan ke awal.', '🔄', () => {
+        navTo('screen-menu');
+      });
+    }
+
+    updateHeaderScore();
+  </script>
+</body>
+</html>
